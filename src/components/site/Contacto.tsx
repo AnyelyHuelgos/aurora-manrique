@@ -10,27 +10,55 @@ const input = "w-full rounded-sm border border-input bg-card px-4 py-3 text-sm";
 export function Contacto() {
   const [errores, setErrores] = useState<Errores>({});
   const [enviado, setEnviado] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [errorEnvio, setErrorEnvio] = useState<string | null>(null);
   const [stage, setStage] = useState("");
   const [challenge, setChallenge] = useState("");
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (enviando) return;
     const form = e.currentTarget;
     const d = new FormData(form);
     const v = (k: string) => String(d.get(k) ?? "").trim();
-    if (v("hp_field")) return;
     const err: Errores = {};
-    if (!v("name")) err.name = "Escribe tu nombre.";
+    if (v("name").length < 2) err.name = "Escribe tu nombre.";
     if (!v("company")) err.company = "Escribe el nombre de tu marca o empresa.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v("email"))) err.email = "Escribe un correo válido.";
     if (!d.get("consent")) err.consent = "Necesitas aceptar para que pueda contactarte.";
     setErrores(err);
     setEnviado(false);
+    setErrorEnvio(null);
     if (Object.keys(err).length) return;
-    setEnviado(true);
-    form.reset();
-    setStage("");
-    setChallenge("");
+
+    setEnviando(true);
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: v("name"),
+          company: v("company"),
+          email: v("email"),
+          website: v("website"),
+          need: v("need"),
+          stage: v("stage"),
+          challenge: v("challenge"),
+          consent: true,
+          hp_field: v("hp_field"),
+        }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) throw new Error(data.error ?? "No pude enviar tu solicitud. Intenta de nuevo.");
+      setEnviado(true);
+      form.reset();
+      setStage("");
+      setChallenge("");
+    } catch (e) {
+      setErrorEnvio((e as Error).message);
+    } finally {
+      setEnviando(false);
+    }
   }
 
   const Err = ({ k }: { k: keyof Errores }) =>
@@ -137,10 +165,16 @@ export function Contacto() {
           </div>
           <button
             type="submit"
-            className="w-full rounded-full bg-dorado px-8 py-4 text-sm font-semibold text-dorado-foreground transition-opacity hover:opacity-90"
+            disabled={enviando}
+            className="w-full rounded-full disabled:opacity-60 bg-dorado px-8 py-4 text-sm font-semibold text-dorado-foreground transition-opacity hover:opacity-90"
           >
-            Agenda una llamada de 30 minutos →
+            {enviando ? "Enviando…" : "Agenda una llamada de 30 minutos →"}
           </button>
+          {errorEnvio && (
+            <p role="alert" className="text-sm text-destructive">
+              {errorEnvio}
+            </p>
+          )}
           {enviado && (
             <p role="status" className="text-sm font-medium">
               Gracias. Recibí tu mensaje y te escribo en menos de 48 horas para agendar la llamada.
