@@ -28,21 +28,47 @@ export const Route = createFileRoute("/")({
 const servicios = [
   {
     titulo: "Estrategia de marca",
+    paraQuien: "Para marcas que necesitan claridad antes de seguir ejecutando.",
     descripcion:
-      "Definimos tu cliente ideal, tu propuesta de valor y el tono con el que hablas. Sales con un plan de comunicación de seis meses listo para ejecutar.",
-    etiquetas: ["Diagnóstico de marca", "Mensaje principal", "Plan de 6 meses"],
+      "Definimos posicionamiento, cliente, mensaje y prioridades para convertir ideas dispersas en un plan concreto.",
+    incluye: ["Diagnóstico estratégico", "Cliente ideal", "Propuesta de valor", "Mensajes principales", "Roadmap de seis meses"],
   },
   {
-    titulo: "Contenido y redes",
+    titulo: "Contenido que tiene una función",
+    paraQuien: "Para marcas que publican, pero quieren que su contenido trabaje para el negocio.",
     descripcion:
-      "Calendario mensual, guiones y piezas para Instagram, LinkedIn y TikTok, pensadas para atraer clientes y no solo seguidores.",
-    etiquetas: ["Calendario editorial", "Guiones de video", "Dirección de arte"],
+      "Calendario, guiones y dirección creativa pensados para atraer clientes y no solo seguidores.",
+    incluye: ["Estrategia editorial", "Calendario mensual", "Guiones", "Dirección creativa", "Instagram, TikTok y LinkedIn", "Medición"],
   },
   {
-    titulo: "Campañas y email",
+    titulo: "Campañas que acompañan la venta",
+    paraQuien: "Meta Ads, landing pages y email conectados en un mismo recorrido.",
     descripcion:
-      "Lanzamientos, pauta en Meta y secuencias de correo que acompañan a tu cliente desde el primer clic hasta la compra.",
-    etiquetas: ["Pauta en Meta", "Email marketing", "Landing de campaña"],
+      "Lanzamientos y pauta que acompañan a tu cliente desde el primer clic hasta la compra.",
+    incluye: ["Estrategia de campaña", "Meta Ads", "Landing pages", "Email marketing", "Optimización y reportes"],
+  },
+];
+
+const casos = [
+  {
+    marca: "Casa Lino",
+    sector: "Moda",
+    cifra: "+42 %",
+    detalle: "ventas desde canales digitales · 3,4× ROAS · 6 meses",
+    reto: "Mucho contenido, pocas ventas.",
+    estrategia: "Mensaje único y campañas conectadas.",
+    resultado: "Saber qué decir y a quién.",
+    fondo: "bg-niebla",
+  },
+  {
+    marca: "Serena Skin",
+    sector: "Bienestar",
+    cifra: "2×",
+    detalle: "leads calificados en 4 meses",
+    reto: "Pauta sin mensaje claro.",
+    estrategia: "Propuesta de valor y pauta enfocada.",
+    resultado: "Contactos que sí están listos para comprar.",
+    fondo: "bg-dorado/10",
   },
 ];
 
@@ -219,40 +245,71 @@ function Index() {
           </Reveal>
         </section>
 
-        {/* 4. Servicios */}
-        <section id="servicios" className="bg-niebla">
-          <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-            <h2 className="font-display text-4xl leading-tight sm:text-5xl">
+        {/* Servicios */}
+        <section id="servicios" className="scroll-mt-20 bg-niebla">
+          <Reveal className="mx-auto max-w-7xl px-6 py-24 md:py-36">
+            <h2 className="font-display text-4xl leading-tight sm:text-6xl">
               Tres formas de trabajar juntas.
             </h2>
-            <p className="mt-4 max-w-xl text-muted-foreground">
+            <p className="mt-6 max-w-xl text-lg text-muted-foreground">
               Puedes empezar por una sola o combinarlas. Todas incluyen reporte mensual
               con resultados reales.
             </p>
-            <div className="mt-16">
-              {servicios.map((s) => (
+            <div className="mt-16 grid gap-6 lg:grid-cols-3">
+              {servicios.map((s, i) => (
                 <article
                   key={s.titulo}
-                  className="grid gap-4 border-t border-border py-10 md:grid-cols-2 md:gap-12"
+                  className="flex flex-col rounded-sm border border-border bg-background p-8 transition-all duration-500 hover:-translate-y-1 hover:border-dorado hover:shadow-[0_24px_48px_-24px_color-mix(in_oklab,var(--dorado)_35%,transparent)] md:p-10"
                 >
-                  <h3 className="font-display text-2xl sm:text-3xl">{s.titulo}</h3>
-                  <div>
-                    <p className="leading-relaxed text-muted-foreground">{s.descripcion}</p>
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {s.etiquetas.map((e) => (
-                        <li
-                          key={e}
-                          className="rounded-full border border-border px-4 py-1 text-xs font-medium text-muted-foreground"
-                        >
-                          {e}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <span className="font-display text-4xl italic text-dorado">0{i + 1}</span>
+                  <h3 className="mt-8 font-display text-3xl leading-tight">{s.titulo}</h3>
+                  <p className="mt-4 text-sm font-medium">{s.paraQuien}</p>
+                  <p className="mt-4 leading-relaxed text-muted-foreground">{s.descripcion}</p>
+                  <p className="mt-8 text-xs font-medium uppercase tracking-[0.2em] text-dorado">Incluye</p>
+                  <ul className="mt-4 space-y-2 border-t border-border pt-4 text-sm text-muted-foreground">
+                    {s.incluye.map((x) => (
+                      <li key={x}>— {x}</li>
+                    ))}
+                  </ul>
+                  <a href="#contacto" className="mt-auto pt-10 text-sm font-semibold hover:text-dorado">
+                    Agenda una llamada →
+                  </a>
                 </article>
               ))}
             </div>
-          </div>
+          </Reveal>
+        </section>
+
+        {/* Casos */}
+        <section id="casos" className="scroll-mt-20 bg-background">
+          <Reveal className="mx-auto max-w-7xl px-6 py-24 md:py-36">
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-dorado">Casos conceptuales</p>
+            <h2 className="mt-6 font-display text-4xl leading-tight sm:text-6xl">
+              Estrategia que se puede medir.
+            </h2>
+            <p className="mt-4 text-xs text-muted-foreground">
+              Casos ilustrativos creados para este portafolio. Las cifras no corresponden a clientes reales.
+            </p>
+            <div className="mt-16 grid gap-6 md:grid-cols-2">
+              {casos.map((c) => (
+                <article key={c.marca} className={`rounded-sm p-8 md:p-12 ${c.fondo}`}>
+                  <p className="text-xs font-medium uppercase tracking-[0.2em]">
+                    {c.marca} · <span className="text-muted-foreground">{c.sector}</span>
+                  </p>
+                  <p className="mt-10 font-display text-7xl leading-none text-dorado lg:text-8xl">{c.cifra}</p>
+                  <p className="mt-4 text-sm text-muted-foreground">{c.detalle}</p>
+                  <dl className="mt-10 space-y-4 border-t border-border pt-6 text-sm">
+                    {([["El reto", c.reto], ["La estrategia", c.estrategia], ["El resultado", c.resultado]] as const).map(([k, v]) => (
+                      <div key={k} className="grid grid-cols-[8rem_1fr] gap-4">
+                        <dt className="font-medium">{k}</dt>
+                        <dd className="text-muted-foreground">{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </article>
+              ))}
+            </div>
+          </Reveal>
         </section>
 
         {/* 5. Método */}
