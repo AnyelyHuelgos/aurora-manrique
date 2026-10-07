@@ -1,22 +1,24 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
+import { Contacto } from "@/components/site/Contacto";
+import { ChatWidget } from "@/components/site/ChatWidget";
+import { MobileCta } from "@/components/site/MobileCta";
 import { Header } from "@/components/site/Header";
 import { CountUp, Reveal } from "@/components/site/motion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Aurora Manrique — Consultora de marketing" },
+      { title: "Aurora Manrique — Consultora de marketing en Bogotá y Latinoamérica" },
       {
         name: "description",
         content:
-          "Consultora de marketing para marcas que ya tienen un buen producto y necesitan que más personas lo sepan, lo entiendan y lo compren.",
+          "Estrategia de marketing para marcas de moda, bienestar y servicios profesionales que ya tienen algo bueno que vender y quieren crecer con claridad.",
       },
-      { property: "og:title", content: "Aurora Manrique — Consultora de marketing" },
+      { property: "og:title", content: "Aurora Manrique — Consultora de marketing en Bogotá y Latinoamérica" },
       {
         property: "og:description",
         content:
-          "Estrategia de marca, contenido y campañas para marcas de moda, bienestar y servicios profesionales.",
+          "Estrategia de marketing para marcas de moda, bienestar y servicios profesionales que ya tienen algo bueno que vender y quieren crecer con claridad.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -109,30 +111,8 @@ const problemas = [
 ];
 
 function Index() {
-  const [enviado, setEnviado] = useState(false);
-  const [errores, setErrores] = useState<{ nombre?: string; correo?: string }>({});
-
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const data = new FormData(form);
-    const nombre = String(data.get("nombre") ?? "").trim();
-    const correo = String(data.get("correo") ?? "").trim();
-
-    const nuevosErrores: { nombre?: string; correo?: string } = {};
-    if (!nombre) nuevosErrores.nombre = "Escribe tu nombre.";
-    if (!correo || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo))
-      nuevosErrores.correo = "Escribe un correo válido.";
-
-    setErrores(nuevosErrores);
-    if (Object.keys(nuevosErrores).length > 0) return;
-
-    setEnviado(true);
-    form.reset();
-  }
-
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground antialiased">
+    <div className="min-h-screen overflow-x-clip bg-background font-sans text-foreground antialiased">
       <Header />
 
       <main>
@@ -347,110 +327,35 @@ function Index() {
           </div>
         </section>
 
-        {/* 7. Contacto */}
-        <section id="contacto" className="bg-background">
-          <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-2 md:py-32 lg:gap-20">
+        <Contacto />
+      </main>
+
+      <footer className="bg-ciruela pb-24 text-ciruela-foreground md:pb-0">
+        <div className="mx-auto max-w-7xl px-6 py-16">
+          <div className="flex flex-col gap-10 md:flex-row md:justify-between">
             <div>
-              <h2 className="font-display text-4xl leading-tight sm:text-5xl">
-                Cuéntame sobre tu marca.
-              </h2>
-              <p className="mt-6 max-w-md leading-relaxed text-muted-foreground">
-                Respondo en menos de 48 horas para agendar una primera llamada de 30
-                minutos, sin costo.
+              <p className="font-display text-3xl">Aurora Manrique</p>
+              <p className="mt-3 text-sm text-ciruela-foreground/70">
+                Bogotá, Colombia · Trabajo con marcas de toda Latinoamérica
               </p>
-              <a
-                href="mailto:hola@auroramanrique.com"
-                className="mt-6 inline-block font-medium text-foreground underline decoration-dorado decoration-2 underline-offset-4"
-              >
+              <a href="mailto:hola@auroramanrique.com" className="mt-6 inline-block text-sm text-dorado underline-offset-4 hover:underline">
                 hola@auroramanrique.com
               </a>
             </div>
-            <form onSubmit={handleSubmit} noValidate className="space-y-6">
-              <div>
-                <label htmlFor="nombre" className="mb-2 block text-sm font-medium">
-                  Nombre
-                </label>
-                <input
-                  id="nombre"
-                  name="nombre"
-                  type="text"
-                  autoComplete="name"
-                  aria-invalid={Boolean(errores.nombre)}
-                  className="w-full rounded-xl border border-input bg-card px-4 py-3 text-sm"
-                />
-                {errores.nombre && (
-                  <p role="alert" className="mt-2 text-sm text-destructive">
-                    {errores.nombre}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label htmlFor="correo" className="mb-2 block text-sm font-medium">
-                  Correo
-                </label>
-                <input
-                  id="correo"
-                  name="correo"
-                  type="email"
-                  autoComplete="email"
-                  aria-invalid={Boolean(errores.correo)}
-                  className="w-full rounded-xl border border-input bg-card px-4 py-3 text-sm"
-                />
-                {errores.correo && (
-                  <p role="alert" className="mt-2 text-sm text-destructive">
-                    {errores.correo}
-                  </p>
-                )}
-              </div>
-              <div>
-                <label htmlFor="necesidad" className="mb-2 block text-sm font-medium">
-                  ¿Qué necesitas?
-                </label>
-                <select
-                  id="necesidad"
-                  name="necesidad"
-                  className="w-full rounded-xl border border-input bg-card px-4 py-3 text-sm"
-                >
-                  <option>Estrategia de marca</option>
-                  <option>Contenido y redes</option>
-                  <option>Campañas y email</option>
-                  <option>Aún no lo sé</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="mensaje" className="mb-2 block text-sm font-medium">
-                  Mensaje
-                </label>
-                <textarea
-                  id="mensaje"
-                  name="mensaje"
-                  rows={4}
-                  className="w-full rounded-xl border border-input bg-card px-4 py-3 text-sm"
-                />
-              </div>
-              <button
-                type="submit"
-                className="rounded-full bg-dorado px-8 py-3 text-sm font-semibold text-dorado-foreground transition-opacity hover:opacity-90"
-              >
-                Enviar mensaje
-              </button>
-              {enviado && (
-                <p role="status" className="text-sm font-medium text-foreground">
-                  Mensaje enviado. Te escribo pronto para agendar la llamada.
-                </p>
-              )}
-            </form>
+            <nav aria-label="Pie de página" className="flex flex-wrap gap-x-8 gap-y-3 text-sm text-ciruela-foreground/80">
+              {[["Sobre mí", "#sobre-mi"], ["Servicios", "#servicios"], ["Casos", "#casos"], ["Método", "#metodo"], ["Contacto", "#contacto"]].map(([l, h]) => (
+                <a key={h} href={h} className="hover:text-ciruela-foreground">{l}</a>
+              ))}
+            </nav>
           </div>
-        </section>
-      </main>
-
-      {/* 8. Footer */}
-      <footer className="bg-ciruela text-ciruela-foreground">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-10 text-sm text-ciruela-foreground/70 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Aurora Manrique</p>
-          <p>Bogotá, Colombia · Trabajo con marcas de toda Latinoamérica</p>
+          <div className="mt-12 flex flex-col gap-2 border-t border-ciruela-foreground/15 pt-6 text-xs text-ciruela-foreground/60 sm:flex-row sm:justify-between">
+            <p>© 2026 Aurora Manrique</p>
+            <p>Proyecto de portafolio · Marca y casos conceptuales.</p>
+          </div>
         </div>
       </footer>
+      <MobileCta />
+      <ChatWidget />
     </div>
   );
 }
