@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
+import { Header } from "@/components/site/Header";
+import { CountUp, Reveal } from "@/components/site/motion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -67,10 +69,17 @@ const pasos = [
   },
 ];
 
-const datos = [
-  ["10", "años en marketing"],
-  ["60+", "marcas acompañadas"],
-  ["3x", "retorno promedio en campañas"],
+const cifras = [
+  { valor: 10, sufijo: "", etiqueta: "años en marketing" },
+  { valor: 60, sufijo: "+", etiqueta: "marcas acompañadas" },
+  { valor: 3, sufijo: "×", etiqueta: "retorno promedio en campañas" },
+];
+
+const problemas = [
+  "Publicas constantemente, pero no sabes qué está generando ventas.",
+  "Inviertes en publicidad sin tener claro qué mensaje funciona.",
+  "Cada mes aparece una nueva idea, pero no existe una estrategia que las conecte.",
+  "Tu producto es bueno, pero comunicar su valor sigue siendo difícil.",
 ];
 
 function Index() {
@@ -98,122 +107,116 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background font-sans text-foreground antialiased">
-      {/* 1. Menú */}
-      <header className="absolute inset-x-0 top-0 z-20">
-        <nav
-          aria-label="Principal"
-          className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6"
-        >
-          <a href="#inicio" className="font-display text-xl text-ciruela-foreground">
-            Aurora Manrique
-          </a>
-          <div className="flex items-center gap-8">
-            <div className="hidden items-center gap-8 md:flex">
-              <a
-                href="#sobre-mi"
-                className="text-sm text-ciruela-foreground/80 transition-colors hover:text-ciruela-foreground"
-              >
-                Sobre mí
-              </a>
-              <a
-                href="#servicios"
-                className="text-sm text-ciruela-foreground/80 transition-colors hover:text-ciruela-foreground"
-              >
-                Servicios
-              </a>
-              <a
-                href="#metodo"
-                className="text-sm text-ciruela-foreground/80 transition-colors hover:text-ciruela-foreground"
-              >
-                Método
-              </a>
-            </div>
-            <a
-              href="#contacto"
-              className="rounded-full border border-dorado px-5 py-2 text-sm font-medium text-dorado transition-colors hover:bg-dorado hover:text-dorado-foreground"
-            >
-              Agenda una llamada
-            </a>
-          </div>
-        </nav>
-      </header>
+      <Header />
 
       <main>
-        {/* 2. Hero */}
-        <section id="inicio" className="bg-ciruela text-ciruela-foreground">
-          <div className="mx-auto grid max-w-6xl gap-12 px-6 pt-32 md:grid-cols-2 md:items-end md:pt-40 lg:gap-16">
-            <div className="pb-16 md:pb-24">
-              <h1 className="animate-hero-rise font-display text-6xl leading-[1.02] sm:text-7xl lg:text-8xl">
-                Aurora
-                <span className="block pl-8 italic text-dorado sm:pl-12">Manrique</span>
-              </h1>
-              <p className="mt-8 max-w-md text-lg leading-relaxed text-ciruela-foreground/80">
-                Consultora de marketing para marcas que ya tienen un buen producto y
-                necesitan que más personas lo sepan, lo entiendan y lo compren.
+        {/* Hero */}
+        <section id="inicio" className="bg-background">
+          <div className="mx-auto grid min-h-[calc(100svh-80px)] max-w-7xl items-center gap-10 px-6 pb-16 pt-6 md:grid-cols-[1.15fr_1fr] md:gap-16 md:pb-24 md:pt-12">
+            <div className="order-2 md:order-1">
+              <p className="text-xs font-medium uppercase tracking-[0.25em] text-dorado">
+                Consultoría de marketing · Latinoamérica
               </p>
-              <div className="mt-10 flex flex-wrap gap-4">
+              <h1 className="animate-hero-rise mt-6 font-display text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-7xl">
+                Tu marca ya tiene algo bueno.
+                <span className="mt-2 block italic text-muted-foreground">
+                  Hagamos que más personas lo elijan.
+                </span>
+              </h1>
+              <p className="mt-8 max-w-lg text-lg leading-relaxed text-muted-foreground">
+                Diseño estrategias de marketing para marcas que quieren dejar de improvisar y
+                empezar a crecer con claridad.
+              </p>
+              <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
                 <a
                   href="#contacto"
-                  className="rounded-full bg-dorado px-7 py-3 text-sm font-semibold text-dorado-foreground transition-opacity hover:opacity-90"
+                  className="w-full rounded-full bg-dorado px-8 py-4 text-center text-sm font-semibold text-dorado-foreground transition-opacity hover:opacity-90 sm:w-auto"
                 >
                   Agenda una llamada
                 </a>
                 <a
-                  href="#servicios"
-                  className="rounded-full border border-ciruela-foreground/40 px-7 py-3 text-sm font-medium text-ciruela-foreground transition-colors hover:border-ciruela-foreground"
+                  href="#metodo"
+                  className="text-center text-sm font-medium underline decoration-dorado decoration-1 underline-offset-8 hover:decoration-2"
                 >
-                  Ver servicios
+                  Conoce cómo trabajo ↓
                 </a>
               </div>
+              <p className="mt-12 border-t border-border pt-6 text-xs tracking-wide text-muted-foreground">
+                10 años de experiencia · +60 marcas acompañadas · Estrategia, contenido y performance
+              </p>
             </div>
-            <div className="flex justify-center md:justify-end">
+            <div className="order-1 md:order-2">
               <img
                 src="/images/aurora-hero.png"
                 alt="Aurora Manrique, consultora de marketing, con los brazos cruzados"
-                className="w-full max-w-sm rounded-t-full border-4 border-dorado/40 object-cover md:max-w-md"
+                className="mx-auto max-h-[52svh] w-full rounded-t-full bg-niebla object-cover object-top md:max-h-none"
               />
             </div>
           </div>
         </section>
 
-        {/* 3. Sobre mí */}
-        <section id="sobre-mi" className="bg-background">
-          <div className="mx-auto grid max-w-6xl gap-12 px-6 py-24 md:grid-cols-2 md:py-32 lg:gap-20">
-            <h2 className="font-display text-4xl leading-tight sm:text-5xl">
-              Estrategia clara antes que publicaciones bonitas.
+        {/* Problema */}
+        <section className="bg-ciruela text-ciruela-foreground">
+          <Reveal className="mx-auto max-w-7xl px-6 py-24 md:py-36">
+            <h2 className="max-w-3xl font-display text-4xl leading-tight sm:text-6xl">
+              ¿Tu marketing se siente más ocupado que efectivo?
             </h2>
+            <ol className="mt-16 grid md:grid-cols-2">
+              {problemas.map((t, i) => (
+                <li key={t} className="flex gap-6 border-t border-ciruela-foreground/15 py-8 md:pr-12">
+                  <span className="font-display text-xl italic text-dorado">0{i + 1}</span>
+                  <p className="text-lg leading-relaxed text-ciruela-foreground/85">{t}</p>
+                </li>
+              ))}
+            </ol>
+            <p className="mt-16 max-w-3xl font-display text-2xl italic leading-snug text-dorado sm:text-4xl">
+              El problema muchas veces no es hacer poco marketing. Es hacer marketing sin dirección.
+            </p>
+          </Reveal>
+        </section>
+
+        {/* Sobre mí */}
+        <section id="sobre-mi" className="scroll-mt-20 bg-background">
+          <Reveal className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:grid-cols-[1fr_1.1fr] md:items-center md:py-36 lg:gap-24">
+            <img
+              src="/images/aurora-about.png"
+              alt="Aurora Manrique pensativa, con la mano en el mentón"
+              className="aspect-[4/5] w-full rounded-sm object-cover"
+            />
             <div>
-              <img
-                src="/images/aurora-about.png"
-                alt="Aurora Manrique pensativa, con la mano en el mentón"
-                className="w-full max-w-md rounded-3xl object-cover"
-              />
-              <p className="mt-8 leading-relaxed text-muted-foreground">
+              <p className="text-xs font-medium uppercase tracking-[0.25em] text-dorado">Sobre mí</p>
+              <h2 className="mt-6 font-display text-4xl leading-tight sm:text-6xl">
+                Estrategia clara antes que publicaciones bonitas.
+              </h2>
+              <p className="mt-10 text-lg leading-relaxed text-muted-foreground">
                 Durante diez años he acompañado a marcas de moda, bienestar y servicios
                 profesionales a ordenar su comunicación. Empiezo por entender a quién le
                 venden y por qué los eligen; después decidimos qué decir, dónde y con qué
                 presupuesto.
               </p>
-              <p className="mt-4 leading-relaxed text-muted-foreground">
+              <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
                 Trabajo con pocas marcas a la vez para estar presente en cada decisión.
               </p>
             </div>
-          </div>
-          <div className="mx-auto max-w-6xl px-6 pb-24 md:pb-32">
-            <dl className="grid gap-10 border-t border-border pt-10 sm:grid-cols-3">
-              {datos.map(([valor, etiqueta]) => (
-                <div key={etiqueta}>
-                  <dt className="sr-only">{etiqueta}</dt>
-                  <dd className="font-display text-5xl">
-                    {valor}
-                    <span className="mt-2 block font-sans text-sm text-muted-foreground">
-                      {etiqueta}
+          </Reveal>
+          <Reveal className="mx-auto max-w-7xl px-6 pb-24 md:pb-36">
+            <dl className="grid gap-12 border-t border-border pt-14 sm:grid-cols-3">
+              {cifras.map((c) => (
+                <div key={c.etiqueta}>
+                  <dt className="sr-only">{c.etiqueta}</dt>
+                  <dd>
+                    <span className="block font-display text-7xl leading-none lg:text-8xl">
+                      <CountUp to={c.valor} suffix={c.sufijo} />
                     </span>
+                    <span className="mt-4 block text-sm text-muted-foreground">{c.etiqueta}</span>
                   </dd>
                 </div>
               ))}
             </dl>
-          </div>
+            <p className="mt-12 text-xs text-muted-foreground">
+              Cifras ilustrativas de un caso conceptual de portafolio.
+            </p>
+          </Reveal>
         </section>
 
         {/* 4. Servicios */}
