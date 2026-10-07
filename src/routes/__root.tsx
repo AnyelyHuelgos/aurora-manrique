@@ -78,14 +78,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Aurora Manrique — Consultora de marketing" },
+      {
+        name: "description",
+        content:
+          "Consultora de marketing para marcas que ya tienen un buen producto y necesitan que más personas lo sepan, lo entiendan y lo compren.",
+      },
+      { name: "author", content: "Aurora Manrique" },
+      { property: "og:title", content: "Aurora Manrique — Consultora de marketing" },
+      {
+        property: "og:description",
+        content:
+          "Estrategia de marca, contenido y campañas para marcas de moda, bienestar y servicios profesionales.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
