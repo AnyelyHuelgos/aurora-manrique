@@ -77,24 +77,40 @@ const casos = [
 const pasos = [
   {
     numero: "01",
-    titulo: "Diagnóstico",
-    descripcion: "Revisamos tu marca, tus números y a tu competencia en una sesión de 90 minutos.",
+    titulo: "Entender",
+    descripcion:
+      "Primero conocemos el negocio: tu marca, tus números y tu competencia, en una sesión de 90 minutos.",
   },
   {
     numero: "02",
-    titulo: "Plan",
-    descripcion: "Te entrego objetivos, mensajes y canales priorizados según tu presupuesto.",
+    titulo: "Decidir",
+    descripcion:
+      "Elegimos dónde tiene sentido invertir: objetivos, mensajes y canales según tu presupuesto.",
   },
   {
     numero: "03",
-    titulo: "Ejecución",
-    descripcion: "Producimos y lanzamos el contenido y las campañas, con revisiones cada semana.",
+    titulo: "Ejecutar",
+    descripcion: "Convertimos la estrategia en contenido y campañas, con revisiones cada semana.",
   },
   {
     numero: "04",
-    titulo: "Medición",
-    descripcion: "Cada mes vemos qué funcionó, qué no y dónde conviene invertir más.",
+    titulo: "Aprender",
+    descripcion:
+      "Medimos cada mes y usamos los resultados para decidir el siguiente movimiento.",
   },
+];
+
+const siFit = [
+  "Tu producto ya está validado.",
+  "Quieres una estrategia a medio plazo.",
+  "Estás dispuesta a medir resultados.",
+  "Buscas acompañamiento estratégico, no solo alguien que publique.",
+];
+
+const noFit = [
+  "Buscas solo publicaciones económicas.",
+  "Necesitas resultados inmediatos sin inversión.",
+  "Quieres estar en todas las redes solo porque tu competencia está ahí.",
 ];
 
 const cifras = [
@@ -292,6 +308,21 @@ function Index() {
           </Reveal>
         </section>
 
+        {/* 6. Testimonio */}
+        <section className="bg-ciruela text-ciruela-foreground">
+          <div className="mx-auto max-w-4xl px-6 py-24 text-center md:py-32">
+            <blockquote>
+              <p className="font-display text-3xl italic leading-snug sm:text-4xl">
+                “Llegamos con mucho contenido y pocas ventas. Seis meses después sabemos
+                exactamente qué decir y a quién, y se nota en la facturación.”
+              </p>
+              <footer className="mt-8 text-sm font-medium tracking-wide text-dorado">
+                Laura Pinzón, fundadora de Casa Lino
+              </footer>
+            </blockquote>
+          </div>
+        </section>
+
         {/* 5. Método */}
         <section id="metodo" className="bg-background">
           <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
@@ -312,19 +343,37 @@ function Index() {
           </div>
         </section>
 
-        {/* 6. Testimonio */}
-        <section className="bg-ciruela text-ciruela-foreground">
-          <div className="mx-auto max-w-4xl px-6 py-24 text-center md:py-32">
-            <blockquote>
-              <p className="font-display text-3xl italic leading-snug sm:text-4xl">
-                “Llegamos con mucho contenido y pocas ventas. Seis meses después sabemos
-                exactamente qué decir y a quién, y se nota en la facturación.”
-              </p>
-              <footer className="mt-8 text-sm font-medium tracking-wide text-dorado">
-                Laura Pinzón, fundadora de Casa Lino
-              </footer>
-            </blockquote>
-          </div>
+        {/* 7. Para quién es */}
+        <section className="bg-niebla">
+          <Reveal className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+            <h2 className="font-display text-4xl leading-tight sm:text-6xl">¿Trabajamos juntas?</h2>
+            <div className="mt-14 grid gap-12 md:grid-cols-2 md:gap-16">
+              <div>
+                <h3 className="font-display text-2xl">Podemos trabajar juntas si…</h3>
+                <ul className="mt-8 space-y-5">
+                  {siFit.map((t) => (
+                    <li key={t} className="flex gap-4 leading-relaxed">
+                      <span aria-hidden="true" className="font-semibold text-dorado">✓</span>
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="border-t border-border pt-12 md:border-l md:border-t-0 md:pl-16 md:pt-0">
+                <h3 className="font-display text-2xl text-muted-foreground">
+                  Probablemente no somos el mejor fit si…
+                </h3>
+                <ul className="mt-8 space-y-5 text-muted-foreground">
+                  {noFit.map((t) => (
+                    <li key={t} className="flex gap-4 leading-relaxed">
+                      <span aria-hidden="true">—</span>
+                      <span>{t}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Reveal>
         </section>
 
         <Contacto />
