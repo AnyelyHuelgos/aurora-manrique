@@ -21,7 +21,14 @@ export const Route = createFileRoute("/")({
           "Estrategia de marketing para marcas de moda, bienestar y servicios profesionales que ya tienen algo bueno que vender y quieren crecer con claridad.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:locale", content: "es_CO" },
+      { property: "og:url", content: "https://aurora-manrique.vercel.app/" },
+      { property: "og:image", content: "https://aurora-manrique.vercel.app/og-image.png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Aurora Manrique — Estrategia clara antes que publicaciones bonitas." },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://aurora-manrique.vercel.app/og-image.png" },
     ],
   }),
   component: Index,
@@ -169,8 +176,14 @@ function Index() {
             </div>
             <div className="order-1 md:order-2">
               <img
-                src="/images/aurora-hero.png"
-                alt="Aurora Manrique, consultora de marketing, con los brazos cruzados"
+                src="/images/aurora-hero-960.webp"
+                srcSet="/images/aurora-hero-640.webp 640w, /images/aurora-hero-960.webp 960w"
+                sizes="(min-width: 768px) 50vw, 100vw"
+                width={960}
+                height={1280}
+                fetchPriority="high"
+                decoding="async"
+                alt="Aurora Manrique, consultora de marketing, con los brazos cruzados en su oficina"
                 className="mx-auto max-h-[52svh] w-full rounded-t-full bg-niebla object-cover object-top md:max-h-none"
               />
             </div>
@@ -201,9 +214,15 @@ function Index() {
         <section id="sobre-mi" className="scroll-mt-20 bg-background">
           <Reveal className="mx-auto grid max-w-7xl gap-12 px-6 py-24 md:grid-cols-[1fr_1.1fr] md:items-center md:py-36 lg:gap-24">
             <img
-              src="/images/aurora-about.png"
-              alt="Aurora Manrique pensativa, con la mano en el mentón"
-              className="aspect-[4/5] w-full rounded-sm object-cover"
+              src="/images/aurora-about-960.webp"
+              srcSet="/images/aurora-about-640.webp 640w, /images/aurora-about-960.webp 960w"
+              sizes="(min-width: 768px) 45vw, 100vw"
+              width={960}
+              height={1200}
+              loading="lazy"
+              decoding="async"
+              alt="Aurora Manrique revisando su tableta en la oficina"
+              className="aspect-[4/5] w-full rounded-sm object-cover object-top"
             />
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.25em] text-dorado">Sobre mí</p>
