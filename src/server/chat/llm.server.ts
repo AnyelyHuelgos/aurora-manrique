@@ -39,7 +39,7 @@ export async function askModel(messages: LlmMessage[]): Promise<LlmResult> {
           // Pedimos el mínimo de razonamiento y que no se incluya en la respuesta.
           reasoning: { effort: "low", exclude: true },
         }),
-        signal: AbortSignal.timeout(20_000),
+        signal: AbortSignal.timeout(15_000),
       });
       if (!r.ok) {
         console.error("Proveedor IA respondió", r.status, "modelo", model); // sin datos del usuario

@@ -43,5 +43,7 @@ export async function dbRpc<T>(fn: string, args: Record<string, unknown>): Promi
     signal: AbortSignal.timeout(10_000),
   });
   if (!r.ok) throw new Error(`Supabase rpc ${fn} ${r.status}`);
-  return (await r.json()) as T;
+  // Las funciones que no devuelven nada (void) responden con el cuerpo vacío.
+  const body = await r.text();
+  return (body ? JSON.parse(body) : null) as T;
 }
