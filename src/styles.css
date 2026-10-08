@@ -40,7 +40,7 @@
   --color-dorado-foreground: var(--dorado-foreground);
   --color-texto: var(--texto);
   --color-texto-secundario: var(--texto-secundario);
-  --font-display: "Bodoni Moda", serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-sans: "Figtree", sans-serif;
 }
 
@@ -137,5 +137,12 @@
 
   .animate-hero-rise {
     animation: none;
+  }
+}
+
+/* Títulos: Playfair Display en peso medio, más legible que el regular en tamaños grandes. */
+@layer base {
+  .font-display {
+    font-weight: 500;
   }
 }
