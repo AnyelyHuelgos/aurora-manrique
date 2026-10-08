@@ -67,6 +67,11 @@ Basadas en un modelo de defensa en capas: si una falla, las demás siguen proteg
 - Restricciones `check` en cada columna como segunda validación, aunque el código falle.
 - Los registros guardan qué pasó (códigos y modelos), nunca el contenido de los mensajes ni datos de las personas.
 
+**Encabezados HTTP**
+- Content-Security-Policy, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy y HSTS, agregados en `src/lib/security-headers.ts` a todas las respuestas del servidor.
+- La CSP solo permite scripts y conexiones del propio sitio y fuentes de Google Fonts, y bloquea que el sitio se incruste en otras páginas.
+- Calificación **A** en [securityheaders.com](https://securityheaders.com/?q=https%3A%2F%2Faurora-manrique.vercel.app%2F). No llega a A+ porque TanStack Start necesita scripts en línea para hidratar la página.
+
 ### Pruebas realizadas
 
 | Prueba | Resultado esperado |
