@@ -32,3 +32,16 @@ export async function dbExists(table: string, filter: string) {
   const rows = (await r.json()) as unknown[];
   return rows.length > 0;
 }
+
+/** Llama una función SQL (RPC) con la llave secreta y devuelve su resultado. */
+export async function dbRpc<T>(fn: string, args: Record<string, unknown>): Promise<T> {
+  const { url, headers } = config();
+  const r = await fetch(`${url}/rest/v1/rpc/${fn}`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(args),
+    signal: AbortSignal.timeout(10_000),
+  });
+  if (!r.ok) throw new Error(`Supabase rpc ${fn} ${r.status}`);
+  return (await r.json()) as T;
+}
