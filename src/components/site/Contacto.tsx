@@ -159,7 +159,13 @@ export function Contacto() {
           <div>
             <label className="flex items-start gap-3 text-sm text-muted-foreground">
               <input type="checkbox" name="consent" required aria-invalid={!!errores.consent} className="mt-1 h-4 w-4 accent-dorado" />
-              Acepto que mis datos se usen para contactarme, según la política de privacidad.
+              <span>
+                Acepto que mis datos se usen para contactarme, según la{" "}
+                <a href="/privacidad" target="_blank" rel="noopener" className="text-foreground underline underline-offset-4">
+                  política de privacidad
+                </a>
+                .
+              </span>
             </label>
             <Err k="consent" />
           </div>

@@ -14,10 +14,39 @@ export function ChatWidget() {
   const [text, setText] = useState("");
   const [pending, setPending] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
   }, [messages, open]);
+
+  // Accesibilidad: al abrir, el foco va al campo de texto; al cerrar, vuelve al botón del chat.
+  useEffect(() => {
+    if (open) inputRef.current?.focus();
+    else if (wasOpen.current) toggleRef.current?.focus();
+    wasOpen.current = open;
+  }, [open]);
+
+  // Escape cierra el chat.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  // Lleva a la persona al formulario de contacto: cierra el chat, baja a #contacto y enfoca el primer campo.
+  function irAContacto() {
+    setOpen(false);
+    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => document.getElementById("name")?.focus({ preventScroll: true }), 600);
+  }
+
+  const yaConverso = messages.some((m) => m.role === "user");
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
@@ -41,6 +70,7 @@ export function ChatWidget() {
       {open && (
         <div
           role="dialog"
+          aria-modal="false"
           aria-label="Asistente de Aurora"
           className="fixed inset-x-3 bottom-3 top-16 z-50 flex flex-col overflow-hidden rounded-sm border border-border bg-background shadow-2xl md:inset-x-auto md:bottom-24 md:right-6 md:top-auto md:h-[560px] md:w-[380px]"
         >
@@ -48,7 +78,10 @@ export function ChatWidget() {
             <div>
               <p className="font-display text-lg">Asistente de Aurora</p>
               <p className="mt-1 text-[11px] leading-snug text-ciruela-foreground/70">
-                Asistente automático con IA. Puede equivocarse. No compartas datos sensibles.
+                Asistente automático con IA. Puede equivocarse. No compartas datos sensibles.{" "}
+                <a href="/privacidad" target="_blank" rel="noopener" className="underline underline-offset-2">
+                  Privacidad
+                </a>
               </p>
             </div>
             <button type="button" aria-label="Cerrar chat" onClick={() => setOpen(false)}>
@@ -70,11 +103,24 @@ export function ChatWidget() {
             ))}
             {pending && <p className="text-sm text-muted-foreground">Escribiendo…</p>}
           </div>
+          {yaConverso && (
+            <div className="flex items-center justify-between gap-3 border-t border-border bg-niebla px-4 py-2.5">
+              <p className="text-xs text-muted-foreground">Llamada de 30 minutos, sin costo.</p>
+              <button
+                type="button"
+                onClick={irAContacto}
+                className="shrink-0 rounded-full border border-ciruela px-4 py-1.5 text-xs font-semibold text-ciruela transition-colors hover:bg-ciruela hover:text-ciruela-foreground"
+              >
+                Agendar llamada →
+              </button>
+            </div>
+          )}
           <form onSubmit={onSubmit} className="flex items-end gap-2 border-t border-border p-3">
             <label htmlFor="chat-input" className="sr-only">
               Tu mensaje
             </label>
             <textarea
+              ref={inputRef}
               id="chat-input"
               rows={2}
               maxLength={2000}
@@ -100,6 +146,7 @@ export function ChatWidget() {
         </div>
       )}
       <button
+        ref={toggleRef}
         type="button"
         aria-label={open ? "Cerrar chat" : "Abrir chat con el asistente"}
         aria-expanded={open}

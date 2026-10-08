@@ -418,6 +418,7 @@ function Index() {
           </div>
           <div className="mt-12 flex flex-col gap-2 border-t border-ciruela-foreground/15 pt-6 text-xs text-ciruela-foreground/60 sm:flex-row sm:justify-between">
             <p>© 2026 Aurora Manrique</p>
+            <a href="/privacidad" className="hover:text-ciruela-foreground">Política de privacidad</a>
             <p>Proyecto de portafolio · Marca y casos conceptuales.</p>
           </div>
         </div>
